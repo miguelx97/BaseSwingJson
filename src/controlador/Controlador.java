@@ -12,6 +12,7 @@ import javax.swing.JMenuItem;
 
 import bbdd.PersistenciaFake;
 import modelo.EjObjeto;
+import util.Log;
 import vista.PanelForm;
 import vista.PanelShow;
 import vista.VistaPrincipal;
@@ -40,28 +41,30 @@ public class Controlador implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		System.out.println("CONTROLADOR");
-		Object opcion = e.getSource();
 		PersistenciaFake persistenciaFake = new PersistenciaFake();
+		Log log = new Log();
+		log.imprimir("CONTROLADOR");
+		Object opcion = e.getSource();
+		
 		
 		if (opcion instanceof JMenuItem) {		//MENU
-			System.out.println("--JMenuItem");
+			log.imprimir("JMenuItem");
 			if (((JMenuItem) opcion).equals(vistaPrincipal.getMntmAdd())) {
-				System.out.println("----getMntmAdd");
+				log.imprimir("getMntmAdd");
 				panelForm.limpiar();
 				vistaPrincipal.definirPanel(panelForm);
 				panelForm.tipoPanel(PanelForm.INSERTAR);
 			} else if (((JMenuItem) opcion).equals(vistaPrincipal.getMntmShow())) {
-				System.out.println("----getMntmShow");
+				log.imprimir("getMntmShow");
 				ArrayList<EjObjeto> lista = persistenciaFake.obtener();
 				panelShow.rellenarTabla(lista);
 				vistaPrincipal.definirPanel(panelShow);	
 			}
 		} else if(opcion instanceof JButton) {		//BOTONES
-			System.out.println("--JButton");
+			log.imprimir("JButton");
 			if (((JButton) opcion).equals(panelForm.getBtnInsertar())) {	//Insertar
 				EjObjeto ejObjeto = panelForm.getDatos();
-				System.out.println("----getBtnInsertar. Param: " + ejObjeto.toString());
+				log.imprimir("getBtnInsertar" , ejObjeto.toString());
 					if (ejObjeto.getEjInt() != -1) {
 						int res = persistenciaFake.guardar(ejObjeto);
 					if (res == 1) {
@@ -75,7 +78,7 @@ public class Controlador implements ActionListener {
 				}
 			} else if (((JButton) opcion).equals(panelShow.getBtnModificar())) {	//Ir a modificar
 				EjObjeto ejObjeto = panelShow.getDatoDeTabla();
-				System.out.println("----getBtnModificar. Param: " + ejObjeto.toString());
+				log.imprimir("getBtnModificar", ejObjeto.toString());
 				if (ejObjeto.getEjInt() != -1) {
 					panelForm.setDatos(ejObjeto);
 					panelForm.tipoPanel(PanelForm.MODIFICAR);
@@ -85,7 +88,7 @@ public class Controlador implements ActionListener {
 				}
 			} else if (((JButton) opcion).equals(panelForm.getBtnModificar())) {		//Modificar
 				EjObjeto ejObjeto = panelForm.getDatos();
-				System.out.println("----getBtnModificar. Param: " + ejObjeto.toString());
+				log.imprimir("getBtnModificar" , ejObjeto.toString());
 				if (ejObjeto.getEjInt() != -1) {
 					int res = persistenciaFake.modificar(ejObjeto);
 					
@@ -102,7 +105,7 @@ public class Controlador implements ActionListener {
 				}
 			} else if (((JButton) opcion).equals(panelShow.getBtnEliminar())) {			//Eliminar
 					int id = panelShow.eliminarContacto();
-					System.out.println("----getBtnEliminar. Param: " + id);
+					log.imprimir("getBtnEliminar", id+"");
 					if(id != -1) {
 						int res = persistenciaFake.eliminar(id);
 						if (res == 1) {
@@ -116,13 +119,8 @@ public class Controlador implements ActionListener {
 								
 			}
 		}
-		
-//		((Component) opcion).addFocusListener(new FocusAdapter() {
-//			@Override
-//			public void focusLost(FocusEvent e) {
-//				vistaPrincipal.setMensaje(VistaPrincipal.INFO_ERROR, "---");
-//			}
-//		});
+
+		log.imprimir("");
 	
 	}
 

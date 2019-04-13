@@ -3,25 +3,19 @@ package vista;
 import java.awt.Color;
 import java.awt.Dimension;
 
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 
 import controlador.Controlador;
-import javax.swing.SwingConstants;
-import java.awt.Component;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
+import util.Log;
 
-public class VistaPrincipal extends JFrame implements IVentanaAgenda{
+public class VistaPrincipal extends JFrame implements IVentana{
 	/**
 	 * 
 	 */
@@ -35,7 +29,8 @@ public class VistaPrincipal extends JFrame implements IVentanaAgenda{
 	private JMenuItem mntmAdd;
 	private JMenuItem mntmShow;
 	private JLabel lblMensaje;
-
+	Log log = new Log();
+	
 
 	public JMenuItem getMntmAdd() {
 		return mntmAdd;
@@ -92,6 +87,7 @@ private void crearMenu() {
 	}
 	
 	public void setMensaje(int estado, String mensaje) {	
+		//log.imprimir("VistaPrincipal", "setMensaje", mensaje, "Mostrando mensaje");
 		lblMensaje.setText(mensaje);
 		lblMensaje.setVisible(true);
 		switch (estado) {
