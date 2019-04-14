@@ -12,8 +12,10 @@ import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 
+
 import controlador.Controlador;
 import util.Log;
+import util.TiempoMensaje;
 
 public class VistaPrincipal extends JFrame implements IVentana{
 	/**
@@ -73,7 +75,7 @@ private void crearMenu() {
 		superPanel.setBounds(0, 0, 590, 371);
 		getContentPane().setLayout(null);
 		
-		lblMensaje = new JLabel("XXXXX");
+		lblMensaje = new JLabel("");
 		lblMensaje.setHorizontalAlignment(SwingConstants.CENTER);
 		lblMensaje.setBounds(0, 345, 590, 69);
 		getContentPane().add(lblMensaje);
@@ -89,7 +91,6 @@ private void crearMenu() {
 	public void setMensaje(int estado, String mensaje) {	
 		//log.imprimir("VistaPrincipal", "setMensaje", mensaje, "Mostrando mensaje");
 		lblMensaje.setText(mensaje);
-		lblMensaje.setVisible(true);
 		switch (estado) {
 		case INFO_EXITO:
 			lblMensaje.setForeground (Color.green);
@@ -105,6 +106,16 @@ private void crearMenu() {
 		}
 		
 		
+		Runnable runnable = new TiempoMensaje(lblMensaje);
+		
+		Thread thread = new Thread(runnable);
+		
+		thread.start();
+		
+	}
+	
+	public void esconderMensaje() {
+		lblMensaje.setVisible(false);
 	}
 
 	@Override
@@ -128,3 +139,7 @@ private void crearMenu() {
 	}
 	
 }
+
+
+
+
