@@ -9,6 +9,9 @@ import vista.VistaPrincipal;
 
 public class Main {
 	
+	public static final int WIDTH_VISTA_PRINCIPAL = 600;
+	public static final int HEIGHT_VISTA_PRINCIPAL = 400;
+	
 	public static void main(String[] args) {
 		java.awt.EventQueue.invokeLater(new Runnable() {
 			public void run() {

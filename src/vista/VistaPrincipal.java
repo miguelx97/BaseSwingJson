@@ -14,8 +14,10 @@ import javax.swing.UIManager;
 
 
 import controlador.Controlador;
+import main.Main;
 import util.Log;
 import util.TiempoMensaje;
+import java.awt.Font;
 
 public class VistaPrincipal extends JFrame implements IVentana{
 	/**
@@ -26,6 +28,8 @@ public class VistaPrincipal extends JFrame implements IVentana{
 	public static final int INFO_EXITO = 1;
 	public static final int INFO_ERROR = 2;
 	public static final int INFO = 3;
+	
+	
 	
 	private JScrollPane superPanel;
 	private JMenuItem mntmAdd;
@@ -72,18 +76,21 @@ private void crearMenu() {
 		}
 		
 		superPanel = new JScrollPane();
-		superPanel.setBounds(0, 0, 590, 371);
+		superPanel.setBounds(0, 0, Main.WIDTH_VISTA_PRINCIPAL, Main.HEIGHT_VISTA_PRINCIPAL);
 		getContentPane().setLayout(null);
 		
 		lblMensaje = new JLabel("");
+		lblMensaje.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblMensaje.setHorizontalAlignment(SwingConstants.CENTER);
-		lblMensaje.setBounds(0, 345, 590, 69);
+		lblMensaje.setBounds(0, Main.HEIGHT_VISTA_PRINCIPAL-5, Main.WIDTH_VISTA_PRINCIPAL, 35);
 		getContentPane().add(lblMensaje);
 		
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setPreferredSize(new Dimension(600, 450));
+		setPreferredSize(new Dimension(Main.WIDTH_VISTA_PRINCIPAL, Main.HEIGHT_VISTA_PRINCIPAL+80));
 		setLocationRelativeTo(null);
+		
+		setResizable(false);
 		
 		getContentPane().add(superPanel);
 	}

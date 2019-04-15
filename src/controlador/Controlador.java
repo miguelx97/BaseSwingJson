@@ -75,23 +75,23 @@ public class Controlador implements ActionListener {
 	
 	}
 
-	private void insertar(PersistenciaFake persistenciaFake, Log log) {
+	private void insertar(PersistenciaFake persistenciaFake, Log log) {			//INSERTAR
 		EjObjeto ejObjeto = panelForm.getDatos();
 		log.imprimir("getBtnInsertar" , ejObjeto.toString());
 			if (ejObjeto.getEjInt() != -1) {
 				int res = persistenciaFake.guardar(ejObjeto);
 			if (res == 1) {
 				vistaPrincipal.setMensaje(VistaPrincipal.INFO, "Contacto guardado");
+				panelForm.limpiar();
 			} else {
 				vistaPrincipal.setMensaje(VistaPrincipal.INFO_ERROR, "ERROR al guardar el contacto");
-			}	
-			panelForm.limpiar();
+			}				
 		} else {
 			vistaPrincipal.setMensaje(VistaPrincipal.INFO_ERROR, "Rellene los campos");
 		}
 	}
 
-	private void irModificar(Log log) {
+	private void irModificar(Log log) {										//IR A MODIFICAR
 		EjObjeto ejObjeto = panelShow.getDatoDeTabla();
 		log.imprimir("getBtnModificar", ejObjeto.toString());
 		if (ejObjeto.getEjInt() != -1) {
@@ -103,7 +103,7 @@ public class Controlador implements ActionListener {
 		}
 	}
 
-	private void modificar(PersistenciaFake persistenciaFake, Log log) {
+	private void modificar(PersistenciaFake persistenciaFake, Log log) {		//MODIFICAR
 		EjObjeto ejObjeto = panelForm.getDatos();
 		log.imprimir("getBtnModificar" , ejObjeto.toString());
 		if (ejObjeto.getEjInt() != -1) {
@@ -122,7 +122,7 @@ public class Controlador implements ActionListener {
 		}
 	}
 
-	private void eliminar(PersistenciaFake persistenciaFake, Log log) {
+	private void eliminar(PersistenciaFake persistenciaFake, Log log) {			//ELIMINAR
 				int id = panelShow.eliminarContacto();
 				log.imprimir("getBtnEliminar", id+"");
 				if(id != -1) {

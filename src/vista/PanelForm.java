@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 
 import controlador.Controlador;
 import modelo.EjObjeto;
+import numerales.Medidas;
 
 import javax.swing.JLabel;
 import java.awt.Font;
@@ -48,12 +49,12 @@ public class PanelForm extends JPanel {
 
 	private void inicializarComponentes() {
 		setLayout(null);
-		setPreferredSize(new Dimension(550, 350));
+		setPreferredSize(new Dimension(Medidas.WIDTH_PANELES, Medidas.HEIGHT_PANELES));
 		
 		lblTitulo = new JLabel("FORM");
 		lblTitulo.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTitulo.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblTitulo.setBounds(10, 26, 530, 35);
+		lblTitulo.setBounds(0, 0, Medidas.WIDTH_PANELES, 60);
 		add(lblTitulo);
 		
 		JLabel lblEjemploInt = new JLabel("Ejemplo Int:");

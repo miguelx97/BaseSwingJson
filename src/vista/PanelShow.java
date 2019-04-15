@@ -1,6 +1,7 @@
 package vista;
 
 import java.awt.Dimension;
+import java.awt.Font;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -9,10 +10,12 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 
 import controlador.Controlador;
 import modelo.EjObjeto;
+import numerales.Medidas;
 
 public class PanelShow extends JPanel {
 
@@ -39,11 +42,13 @@ public class PanelShow extends JPanel {
 
 	private void inicializarComponentes() {
 		setLayout(null);
-		setPreferredSize(new Dimension(550, 350));
+		setPreferredSize(new Dimension(Medidas.WIDTH_PANELES, Medidas.HEIGHT_PANELES));
 		tabla();
-		JLabel lblMostrar = new JLabel("Mostrar");
-		lblMostrar.setBounds(223, 23, 46, 14);
-		add(lblMostrar);
+		JLabel lblTitulo = new JLabel("Mostrar");
+		lblTitulo.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTitulo.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lblTitulo.setBounds(0, 0, Medidas.WIDTH_PANELES, 60);
+		add(lblTitulo);
 		
 		btnModificar = new JButton("Modificar");
 		btnModificar.setBounds(26, 316, 89, 23);
@@ -59,7 +64,7 @@ public class PanelShow extends JPanel {
 	private void tabla() {
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(26, 72, 499, 214);
+		scrollPane.setBounds(22, 72, Medidas.WIDTH_PANELES, 214);
 		add(scrollPane);
 		
 		tablaContactos = new JTable();
