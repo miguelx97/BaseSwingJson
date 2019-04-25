@@ -2,6 +2,8 @@ package vista;
 
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -74,6 +76,7 @@ public class PanelForm extends JPanel {
 		btnInsertarModificar.setBounds(217, 252, 131, 23);
 		add(btnInsertarModificar);
 
+		txtString.addKeyListener(new MyKeyListener());		//poner en el ultimo jTextField que al pulsar enter se presione el boton
 	}
 	
 	public void setControlador(Controlador c) {
@@ -97,7 +100,8 @@ public class PanelForm extends JPanel {
 					txtString.getText());
 			
 			customReturn.setObject(ejObjeto);
-		
+			txtInt.requestFocus();
+			
 			return customReturn;
 		
 		}			
@@ -132,5 +136,14 @@ public class PanelForm extends JPanel {
 		
 		
 	}
+	
+	
+	public class MyKeyListener extends KeyAdapter {
+        public void keyPressed(KeyEvent evt) {
+            if (evt.getKeyChar() == KeyEvent.VK_ENTER) {
+                btnInsertarModificar.doClick();
+            }
+        }
+    }
 
 }

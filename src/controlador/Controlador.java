@@ -103,7 +103,7 @@ public class Controlador implements ActionListener {
 				}
 
 				if(res != 1) {
-					error("Error al guardar en la base de datos");
+					error("ERROR al guardar en la base de datos");
 				}
 						
 		} else {
