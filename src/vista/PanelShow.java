@@ -134,7 +134,7 @@ public class PanelShow extends JPanel {
 		return ejObjeto;
 	}
 	
-	public int eliminarContacto () {
+	public int eliminarObjeto () {
 		int row = tablaContactos.getSelectedRow();
 		int id = -1;
 		if(row != -1) {

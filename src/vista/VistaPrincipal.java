@@ -25,9 +25,8 @@ public class VistaPrincipal extends JFrame implements IVentana{
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public static final int INFO_EXITO = 1;
-	public static final int INFO_ERROR = 2;
-	public static final int INFO = 3;
+	public static final int INFO_ERROR = 1;
+	public static final int INFO = 2;
 	
 	
 	
@@ -96,20 +95,17 @@ private void crearMenu() {
 	}
 	
 	public void setMensaje(int estado, String mensaje) {	
-		//log.imprimir("VistaPrincipal", "setMensaje", mensaje, "Mostrando mensaje");
+		log.imprimir("VistaPrincipal", "setMensaje", mensaje, "Mostrando mensaje");
 		lblMensaje.setText(mensaje);
 		switch (estado) {
-		case INFO_EXITO:
-			lblMensaje.setForeground (Color.green);
-			break;
-		case INFO_ERROR:
-			lblMensaje.setForeground (Color.red);
-			break;
-		case INFO:
-			lblMensaje.setForeground (Color.blue);
-			break;
-		default:
-			break;
+			case INFO_ERROR:
+				lblMensaje.setForeground (Color.red);
+				break;
+			case INFO:
+				lblMensaje.setForeground (Color.blue);
+				break;
+			default:
+				break;
 		}
 		
 		

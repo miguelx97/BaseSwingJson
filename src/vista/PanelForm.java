@@ -1,23 +1,19 @@
 package vista;
 
-import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 
+import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 
 import controlador.Controlador;
+import modelo.CustomReturn;
 import modelo.EjObjeto;
 import numerales.Medidas;
-
-import javax.swing.JLabel;
-import java.awt.Font;
-import javax.swing.SwingConstants;
-import javax.swing.JTextField;
-import javax.swing.JButton;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import util.Util;
 
 public class PanelForm extends JPanel {
 	/**
@@ -32,15 +28,14 @@ public class PanelForm extends JPanel {
 	private JLabel lblTitulo;
 	private JTextField txtInt;
 	private JTextField txtString;
-	private JButton btnInsertar;
-	private JButton btnModificar;
+	private JButton btnInsertarModificar;
 
-	public JButton getBtnModificar() {
-		return btnModificar;
+	public JButton getBtnInsertarModificar() {
+		return btnInsertarModificar;
 	}
 
-	public JButton getBtnInsertar() {
-		return btnInsertar;
+	public void setBtnInsertarModificar(JButton btnInsertarModificar) {
+		this.btnInsertarModificar = btnInsertarModificar;
 	}
 
 	public PanelForm() {
@@ -75,32 +70,37 @@ public class PanelForm extends JPanel {
 		add(txtString);
 		txtString.setColumns(10);
 		
-		btnInsertar = new JButton("INSERTAR");
-		btnInsertar.setBounds(248, 252, 89, 23);
-		add(btnInsertar);
-		
-		btnModificar = new JButton("MODIFICAR");
-		btnModificar.setBounds(248, 252, 89, 23);
-		add(btnModificar);
+		btnInsertarModificar = new JButton("INSERTAR");
+		btnInsertarModificar.setBounds(217, 252, 131, 23);
+		add(btnInsertarModificar);
 
 	}
 	
 	public void setControlador(Controlador c) {
-		btnInsertar.addActionListener(c);		
-		btnModificar.addActionListener(c);		
+		btnInsertarModificar.addActionListener(c);		
 	}
 	
-	public EjObjeto getDatos () {
+	public CustomReturn getDatos () {
 		EjObjeto ejObjeto;
-		if(!(txtInt.getText().isEmpty() || txtString.getText().isEmpty())) {
-			ejObjeto = new EjObjeto(id,
-				Integer.parseInt(txtInt.getText()+""), 
-				txtString.getText());
-			return ejObjeto;	
-		}
-		return new EjObjeto(id, -1,"");
+		CustomReturn customReturn = new CustomReturn();
 		
+		if(txtInt.getText().isEmpty() || txtString.getText().isEmpty()) {
+			customReturn.setError("Rellene los campos");
+			return customReturn;
+		} else if (!new Util().isNumeric(txtInt.getText())){
+			customReturn.setError("El campo debe ser numerico");
+			return customReturn;
+		}
+		else {
+			ejObjeto = new EjObjeto(id,
+					Integer.parseInt(txtInt.getText()+""), 
+					txtString.getText());
 			
+			customReturn.setObject(ejObjeto);
+		
+			return customReturn;
+		
+		}			
 	}
 	
 	public void setDatos (EjObjeto ejObjeto) {
@@ -119,13 +119,12 @@ public class PanelForm extends JPanel {
 		switch (tipo) {
 		case INSERTAR:
 			lblTitulo.setText("NUEVO");
-			btnInsertar.setVisible(true);
-			btnModificar.setVisible(false);
+			btnInsertarModificar.setText("INSERTAR");
+			id = -2;
 			break;
 		case MODIFICAR:
 			lblTitulo.setText("MODIFICAR");
-			btnInsertar.setVisible(false);
-			btnModificar.setVisible(true);
+			btnInsertarModificar.setText("MODIFICAR");
 			break;
 		default:
 			break;
