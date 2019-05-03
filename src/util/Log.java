@@ -4,46 +4,49 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Log {
+	private String clase;
+	
+	public Log(String clase) {
+		this.clase = clase;
+	}
 	
 	Date fecha = new Date();
-	String fechaFormato = new SimpleDateFormat("HH:mm:ss").format(fecha);
+	String fechaFormato = new SimpleDateFormat("yyyy/mm/dd hh:mm:ss").format(fecha);
 	
-	public void imprimir(String clase, String funcion, String parametros, String mensaje) {
-		String log = "";
+	public void print(String mensaje) {			
 		
-		if(!clase.isEmpty()) {
-			log += "Clase: " + clase + " | ";
-		}
-		if(!funcion.isEmpty()) {
-			log += "Funcion: " + funcion + " | ";
-		}
-		if(!mensaje.isEmpty()) {
-			log += "Mensaje: " + mensaje + " | ";
-		}
-		if(!parametros.isEmpty()) {
-			log += "Parametros: " + parametros + " | ";		
-		}
-		
-		if(!log.isEmpty()) {
-			log= fechaFormato + "  " + log.replaceAll("\\|\\s*$", "");
-		}
-		
-		
-		
-		System.out.println(log);
+		System.out.println(fechaFormato + "   [" + clase + "] " + mensaje);
 		
 	}
 	
-	public void imprimir(String clase, String funcion, String parametros) {
-		imprimir(clase, funcion, parametros, "");
+	
+	public void error(String func, String error) {
+		print("ERROR: " + "Function: " + func + ". Message: " + error);
 	}
 	
-	public void imprimir(String funcion, String parametros) {
-		imprimir("", funcion, parametros);
+	
+	public void iniFunc(String function) {
+		print("Starting function: " + function + ". Class: " + clase);
 	}
 	
-	public void imprimir(String funcion) {
-		imprimir(funcion, "");
+	
+	public void iniFunc(String function, Object[] params) {
+		
+		String strParams = "";
+		String separador = " , ";
+		for (Object param : params) {
+			
+			if(param instanceof String){
+				strParams += "\"" + param + "\"" + separador;
+			} else{
+				strParams += param + separador;
+			}
+			
+			
+		}
+		
+		strParams = strParams.replaceAll("[\\s\\S]{0," + separador.length() + "}$", "");
+		
+		print("Starting function: " + function + "(" + strParams + ")");
 	}
-
 }
