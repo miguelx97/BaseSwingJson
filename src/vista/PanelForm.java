@@ -12,10 +12,10 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import controlador.Controlador;
-import modelo.CustomReturn;
+import modelo.ReturnDatos;
 import modelo.EjObjeto;
 import numerales.Medidas;
-import util.Util;
+import util.Validadores;
 
 public class PanelForm extends JPanel {
 	/**
@@ -83,16 +83,19 @@ public class PanelForm extends JPanel {
 		btnInsertarModificar.addActionListener(c);		
 	}
 	
-	public CustomReturn getDatos () {
+	public ReturnDatos getDatos () {
 		EjObjeto ejObjeto;
-		CustomReturn customReturn = new CustomReturn();
+		ReturnDatos customReturn = new ReturnDatos();
 		
-		if(txtInt.getText().isEmpty() || txtString.getText().isEmpty()) {
-			customReturn.setError("Rellene los campos");
-			return customReturn;
-		} else if (!new Util().isNumeric(txtInt.getText())){
-			customReturn.setError("El campo debe ser numerico");
-			return customReturn;
+		if(Validadores.estaVacio(txtInt.getText())) {
+			customReturn.setError("Rellene txtInt");
+			txtInt.requestFocus();
+		} else if(Validadores.estaVacio(txtString.getText())){
+			customReturn.setError("Rellene txtString");
+			txtString.requestFocus();
+		} else if (!Validadores.esNumero(txtInt.getText())){
+			customReturn.setError("El campo txtInt debe ser numerico");
+			txtInt.requestFocus();
 		}
 		else {
 			ejObjeto = new EjObjeto(id,
@@ -101,10 +104,9 @@ public class PanelForm extends JPanel {
 			
 			customReturn.setObject(ejObjeto);
 			txtInt.requestFocus();
-			
-			return customReturn;
 		
-		}			
+		}		
+		 return customReturn;
 	}
 	
 	public void setDatos (EjObjeto ejObjeto) {

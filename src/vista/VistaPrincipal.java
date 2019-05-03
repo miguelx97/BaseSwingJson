@@ -34,7 +34,7 @@ public class VistaPrincipal extends JFrame implements IVentana{
 	private JMenuItem mntmAdd;
 	private JMenuItem mntmShow;
 	private JLabel lblMensaje;
-	Log log = new Log();
+	Log log = new Log(this.getClass().getSimpleName());
 	
 
 	public JMenuItem getMntmAdd() {
@@ -95,7 +95,7 @@ private void crearMenu() {
 	}
 	
 	public void setMensaje(int estado, String mensaje) {	
-		log.imprimir("VistaPrincipal", "setMensaje", mensaje, "Mostrando mensaje");
+		log.iniFunc(new Object(){}.getClass().getEnclosingMethod().getName(), new Object[]{estado, mensaje});
 		lblMensaje.setText(mensaje);
 		switch (estado) {
 			case INFO_ERROR:

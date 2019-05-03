@@ -1,16 +1,16 @@
 package modelo;
 
-public class CustomReturn {
+public class ReturnDatos {
 		private Object object;
 		private String error;
 		
-		public CustomReturn(Object object, String error) {
+		public ReturnDatos(Object object, String error) {
 			super();
 			this.object = object;
 			this.error = error;
 		}
 		
-		public CustomReturn() {}
+		public ReturnDatos() {}
 				
 		public Object getObject() {
 			return object;

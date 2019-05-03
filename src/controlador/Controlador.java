@@ -8,7 +8,7 @@ import javax.swing.JButton;
 import javax.swing.JMenuItem;
 
 import bbdd.PersistenciaFake;
-import modelo.CustomReturn;
+import modelo.ReturnDatos;
 import modelo.EjObjeto;
 import util.Log;
 import vista.PanelForm;
@@ -20,7 +20,7 @@ public class Controlador implements ActionListener {
 	private VistaPrincipal vistaPrincipal;
 	private PanelForm panelForm;
 	private PanelShow panelShow;
-	Log log = new Log();
+	Log log = new Log(this.getClass().getSimpleName());
 	
 	public Controlador(VistaPrincipal vPrincipal) {
 		this.vistaPrincipal = vPrincipal;
@@ -42,25 +42,25 @@ public class Controlador implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		PersistenciaFake persistencia = new PersistenciaFake();
 		
-		log.imprimir("CONTROLADOR");
+		log.print("INICIO DEL CONTROLADOR");
 		Object opcion = e.getSource();
 		
 		
 		if (opcion instanceof JMenuItem) {		//MENU
-			log.imprimir("JMenuItem");
+			log.print("JMenuItem");
 			if (((JMenuItem) opcion).equals(vistaPrincipal.getMntmAdd())) {
-				log.imprimir("getMntmAdd");
+				log.print("getMntmAdd");
 				panelForm.limpiar();
 				vistaPrincipal.definirPanel(panelForm);
 				panelForm.tipoPanel(PanelForm.INSERTAR);
 			} else if (((JMenuItem) opcion).equals(vistaPrincipal.getMntmShow())) {
-				log.imprimir("getMntmShow");
+				log.print("getMntmShow");
 				ArrayList<EjObjeto> lista = persistencia.obtener();
 				panelShow.rellenarTabla(lista);
 				vistaPrincipal.definirPanel(panelShow);	
 			}
 		} else if(opcion instanceof JButton) {		//BOTONES
-			log.imprimir("JButton");
+			log.print("JButton");
 			if (((JButton) opcion).equals(panelForm.getBtnInsertarModificar())) {	//Insertar o modificar
 				insertarModificar(persistencia);
 			} else if (((JButton) opcion).equals(panelShow.getBtnModificar())) {	//Ir a modificar
@@ -71,18 +71,18 @@ public class Controlador implements ActionListener {
 		}
 
 		
-		log.imprimir("");
+		log.space();
 	
 	}
 
 	
 	private void insertarModificar(PersistenciaFake persistencia) {			//INSERTAR y MODIFICAR
 		EjObjeto ejObjeto = null;
-		CustomReturn ret = panelForm.getDatos();
+		ReturnDatos ret = panelForm.getDatos();
 		
 		if (ret.getError() == null) {
 			ejObjeto = (EjObjeto) ret.getObject();
-			log.imprimir("insertarModificar" , ejObjeto.toString());
+			log.iniFunc(new Object(){}.getClass().getEnclosingMethod().getName(), ejObjeto.toString());
 			
 				int res = 0;
 				if(ejObjeto.getId() == -2) {	//insertar
@@ -115,7 +115,7 @@ public class Controlador implements ActionListener {
 
 	private void irModificar() {										//IR A MODIFICAR
 		EjObjeto ejObjeto = panelShow.getDatoDeTabla();
-		log.imprimir("getBtnModificar", ejObjeto.toString());
+		log.iniFunc(new Object(){}.getClass().getEnclosingMethod().getName(), ejObjeto.toString());
 		if (ejObjeto.getEjInt() != -1) {
 			panelForm.setDatos(ejObjeto);
 			panelForm.tipoPanel(PanelForm.MODIFICAR);
@@ -127,7 +127,7 @@ public class Controlador implements ActionListener {
 
 	private void eliminar(PersistenciaFake persistenciaFake) {			//ELIMINAR
 				int id = panelShow.eliminarObjeto();
-				log.imprimir("getBtnEliminar", id+"");
+				log.iniFunc(new Object(){}.getClass().getEnclosingMethod().getName(), id+"");
 				if(id != -1) {
 					int res = persistenciaFake.eliminar(id);
 					if (res == 1) {
