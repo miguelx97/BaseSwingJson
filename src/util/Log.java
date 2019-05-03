@@ -26,7 +26,7 @@ public class Log {
 	
 	
 	public void iniFunc(String function) {
-		print("Starting function: " + function + ". Class: " + clase);
+		print("Starting function: " + function);
 	}
 	
 	
