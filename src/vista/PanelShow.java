@@ -134,14 +134,11 @@ public class PanelShow extends JPanel {
 		return ejObjeto;
 	}
 	
-	public int eliminarObjeto () {
+	public void eliminarObjeto () {
 		int row = tablaContactos.getSelectedRow();
-		int id = -1;
 		if(row != -1) {
-			id = Integer.parseInt(model.getValueAt(row,0) + "");
 			model.removeRow(row);
 			}
-		return id;
 	}
 
 }

@@ -7,9 +7,9 @@ import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JMenuItem;
 
-import bbdd.PersistenciaFake;
-import modelo.ReturnDatos;
+import bbdd.Persistencia;
 import modelo.EjObjeto;
+import modelo.ReturnDatos;
 import util.Log;
 import vista.PanelForm;
 import vista.PanelShow;
@@ -40,7 +40,8 @@ public class Controlador implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		PersistenciaFake persistencia = new PersistenciaFake();
+		//PersistenciaFake persistenciaFake = new PersistenciaFake();
+		Persistencia persistencia = new Persistencia();
 		
 		log.print("INICIO DEL CONTROLADOR");
 		Object opcion = e.getSource();
@@ -55,7 +56,7 @@ public class Controlador implements ActionListener {
 				panelForm.tipoPanel(PanelForm.INSERTAR);
 			} else if (((JMenuItem) opcion).equals(vistaPrincipal.getMntmShow())) {
 				log.print("getMntmShow");
-				ArrayList<EjObjeto> lista = persistencia.obtener();
+				ArrayList<EjObjeto> lista = persistencia.obtenerTodos();
 				panelShow.rellenarTabla(lista);
 				vistaPrincipal.definirPanel(panelShow);	
 			}
@@ -76,7 +77,7 @@ public class Controlador implements ActionListener {
 	}
 
 	
-	private void insertarModificar(PersistenciaFake persistencia) {			//INSERTAR y MODIFICAR
+	private void insertarModificar(Persistencia persistencia) {			//INSERTAR y MODIFICAR
 		EjObjeto ejObjeto = null;
 		ReturnDatos ret = panelForm.getDatos();
 		
@@ -96,7 +97,7 @@ public class Controlador implements ActionListener {
 					res = persistencia.modificar(ejObjeto);
 					
 					if (res == 1) {
-						panelShow.rellenarTabla(persistencia.obtener());
+						panelShow.rellenarTabla(persistencia.obtenerTodos());
 						vistaPrincipal.setMensaje(VistaPrincipal.INFO, "Objeto modificado");
 						vistaPrincipal.definirPanel(panelShow);	
 					}	
@@ -125,13 +126,15 @@ public class Controlador implements ActionListener {
 		}
 	}
 
-	private void eliminar(PersistenciaFake persistenciaFake) {			//ELIMINAR
-				int id = panelShow.eliminarObjeto();
+	private void eliminar(Persistencia persistencia) {			//ELIMINAR
+				EjObjeto ejObjeto= panelShow.getDatoDeTabla();
+				int id = ejObjeto.getId();
 				log.iniFunc(new Object(){}.getClass().getEnclosingMethod().getName(), id+"");
 				if(id != -1) {
-					int res = persistenciaFake.eliminar(id);
+					int res = persistencia.eliminar(id);
 					if (res == 1) {
-						vistaPrincipal.setMensaje(VistaPrincipal.INFO, "Objeto eliminado");
+						panelShow.eliminarObjeto();
+						vistaPrincipal.setMensaje(VistaPrincipal.INFO, "el objeto " + ejObjeto.getEjString() + " ha sido eliminado");
 					} else {
 						error("ERROR al eliminar el contacto");
 					}	

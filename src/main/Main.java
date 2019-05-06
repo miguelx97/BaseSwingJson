@@ -1,6 +1,6 @@
 package main;
 
-import bbdd.PersistenciaFake;
+import bbdd.Persistencia;
 import controlador.Controlador;
 import vista.PanelForm;
 import vista.PanelShow;
@@ -37,7 +37,7 @@ public class Main {
 				vistaPrincipal.hacerVisible();
 				
 				//mostrar PanelShow
-				panelShow.rellenarTabla(new PersistenciaFake().obtener());
+				panelShow.rellenarTabla(new Persistencia().obtenerTodos());
 				vistaPrincipal.definirPanel(panelShow);	
 			}
 		});

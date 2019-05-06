@@ -1,5 +1,8 @@
 package util;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -18,12 +21,23 @@ public class Log {
 		
 		Date fecha = new Date();
 		String fechaFormato = new SimpleDateFormat("yyyy/mm/dd hh:mm:ss").format(fecha);
-		System.out.println(fechaFormato + "   [" + clase + "] " + mensaje);
-		
+		String imprimir =fechaFormato + "   [" + clase + "] " + mensaje;
+		System.out.println(imprimir);
+//		BufferedWriter writer;
+//		try {
+//			writer = new BufferedWriter(new FileWriter("c:/logs.txt"));
+//			writer.write(imprimir);
+//			writer.close();
+//		
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+	    
 	}
 	
 	
-	public void error(String func, String error) {
+	public void error(String func, String error) {		//Informa de un error
 		print("ERROR: " + "Function: " + func + ". Mensaje: " + error);
 	}
 	
@@ -33,7 +47,7 @@ public class Log {
 	}
 	
 	
-	public void iniFunc(String funcion, Object[] params) {	////Avisa de cuando entra en una funcion con varios parametros
+	public void iniFunc(String funcion, Object[] params) {	//Avisa de cuando entra en una funcion con varios parametros
 		
 		String strParams = "";
 		String separador = " , ";

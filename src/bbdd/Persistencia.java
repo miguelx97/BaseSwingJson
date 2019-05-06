@@ -8,15 +8,17 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import modelo.EjObjeto;
+import util.Log;
 
 public class Persistencia {
+	Log log = new Log(this.getClass().getSimpleName());
 	public int guardar(EjObjeto ejObjeto) {
 		int r = 0;
 			
 		try{
 			Conexion conexion = new Conexion();
 			Connection con = conexion.getConnection();
-			String query =	"INSERT INTO EJBBDD (EJINT, EJSTRING) " +
+			String query =	"INSERT INTO ej_tabla (ej_int, ej_string) " +
 									"VALUES (?, ?)";
 
 			PreparedStatement pstmt = con.prepareStatement(query);
@@ -30,18 +32,19 @@ public class Persistencia {
 			
 			if (con != null) con.close();
 			
-		} catch(SQLException s) {
+		} catch(SQLException ex) {
+			log.error(new Object(){}.getClass().getEnclosingMethod().getName(), ex.getMessage());
 		}
 		return r;
 	}
 	
-	public ArrayList<EjObjeto> obtener() {
+	public ArrayList<EjObjeto> obtenerTodos() {
 		ArrayList<EjObjeto> listaEjObjetos = new ArrayList<EjObjeto>();
 		
 			try{
 			Conexion conexion = new Conexion();
 			Connection con = conexion.getConnection();
-			String query = "SELECT ID, EJINT,  EJSTRING FROM EJBBDD";
+			String query = "SELECT id, ej_int,  ej_string FROM ej_tabla";
 
 			
 			Statement pstmt = con.createStatement();
@@ -50,9 +53,9 @@ public class Persistencia {
 			EjObjeto contact = null;
 			
 			while (rset.next()) {
-				int id = rset.getInt("ID");
-				int ejInt = rset.getInt("EJSTRING");
-				String ejString = rset.getString("EJSTRING");
+				int id = rset.getInt("id");
+				int ejInt = rset.getInt("ej_int");
+				String ejString = rset.getString("ej_string");
 				
 				contact = new EjObjeto(id, ejInt, ejString);
 				
@@ -64,8 +67,8 @@ public class Persistencia {
 			
 			if (con != null) con.close();
 			
-		} catch (SQLException s) {
-			s.printStackTrace();
+		} catch (SQLException ex) {
+			log.error(new Object(){}.getClass().getEnclosingMethod().getName(), ex.getMessage());
 		}
 		
 		return listaEjObjetos;
@@ -78,7 +81,7 @@ public class Persistencia {
 		try{
 			Conexion conexion = new Conexion();
 			Connection con = conexion.getConnection();
-			String query =	"DELETE FROM EJBBDD WHERE ID_EJ=" + id;
+			String query =	"DELETE FROM ej_tabla WHERE id=" + id;
 
 			PreparedStatement pstmt = con.prepareStatement(query);
 			
@@ -89,20 +92,21 @@ public class Persistencia {
 			
 			if (con != null) con.close();
 			
-		} catch(SQLException s) {
+		} catch(SQLException ex) {
+			log.error(new Object(){}.getClass().getEnclosingMethod().getName(), ex.getMessage());
 		}
 		return r;
 	}
 	
-	public int modificarEjObjeto(EjObjeto ejObjeto) {
+	public int modificar(EjObjeto ejObjeto) {
 		int r = 0;
 			
 		try{
 			Conexion conexion = new Conexion();
 			Connection con = conexion.getConnection();
-			String query =	" UPDATE CONTACTOS " +
-							" SET  EJINT = ?,  EJSTRING = ?" +
-							" WHERE ID_CONTACTO = ?";
+			String query =	" UPDATE ej_tabla " +
+							" SET  ej_int = ?,  ej_string = ?" +
+							" WHERE id = ?";
 
 			PreparedStatement pstmt = con.prepareStatement(query);
 			pstmt.setInt(1, ejObjeto.getEjInt());
@@ -116,7 +120,8 @@ public class Persistencia {
 			
 			if (con != null) con.close();
 			
-		} catch(SQLException s) {
+		} catch(SQLException ex) {
+			log.error(new Object(){}.getClass().getEnclosingMethod().getName(), ex.getMessage());
 		}
 		return r;
 	}
