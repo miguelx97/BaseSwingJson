@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import modelo.EjObjeto;
 import util.Log;
 
-public class Persistencia {
+public class Persistencia implements IPersistencia{
 	Log log = new Log(this.getClass().getSimpleName());
 	public int guardar(EjObjeto ejObjeto) {
 		int r = 0;
@@ -38,7 +38,8 @@ public class Persistencia {
 		return r;
 	}
 	
-	public ArrayList<EjObjeto> obtenerTodos() {
+	
+	public ArrayList<EjObjeto> obtenerLista() {
 		ArrayList<EjObjeto> listaEjObjetos = new ArrayList<EjObjeto>();
 		
 			try{

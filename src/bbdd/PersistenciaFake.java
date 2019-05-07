@@ -5,7 +5,7 @@ import java.util.Arrays;
 
 import modelo.EjObjeto;
 
-public class PersistenciaFake {
+public class PersistenciaFake implements IPersistencia{
 	static int contador = 0;
 	static ArrayList<EjObjeto> bbdd = new ArrayList<EjObjeto>(Arrays.asList(new EjObjeto(contador++, 1, "uno"),new EjObjeto(contador++, 2, "dos"),new EjObjeto(contador++, 3, "tres")));
 	
@@ -16,7 +16,7 @@ public class PersistenciaFake {
 		return 1;
 	}
 	
-	public ArrayList<EjObjeto> obtener() {
+	public ArrayList<EjObjeto> obtenerLista() {
 		return bbdd;
 	}
 	
@@ -45,6 +45,8 @@ public class PersistenciaFake {
 		}
 		return 1;
 	}
+
+	
 	
 	
 }

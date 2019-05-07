@@ -3,8 +3,9 @@ package bbdd;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.sql.*;
 import java.util.Properties;
+
+import java.sql.*;
 
 import util.Log;
 
@@ -41,15 +42,15 @@ public class Conexion {
 		propiedades.load(entrada);
 		// obtenemos las propiedades y las imprimimos
 		
-//		driver = propiedades.getProperty("driver");
-//		url = propiedades.getProperty("url");
-//		usuario = propiedades.getProperty("usuario");
-//		password = propiedades.getProperty("password");
+		driver = propiedades.getProperty("driver");
+		url = propiedades.getProperty("url");
+		usuario = propiedades.getProperty("usuario");
+		password = propiedades.getProperty("password");
 		
-		driver="org.h2.Driver";
-		url="jdbc:h2:file:.\\bbdd\\bbdd";
-		usuario="miguel";
-		password="Pa$$w0rd";
+//		driver="org.h2.Driver";
+//		url="jdbc:h2:file:./bbdd/bbdd";
+//		usuario="miguel";
+//		password="Pa$$w0rd";
 		
 		} catch (IOException ex) {
 			log.error(new Object(){}.getClass().getEnclosingMethod().getName(), ex.getMessage());
