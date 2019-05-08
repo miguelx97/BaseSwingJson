@@ -37,7 +37,7 @@ public class Conexion {
 		Properties propiedades = new Properties();
 		InputStream entrada = null;
 		try {
-		entrada = new FileInputStream("configuracion.properties");
+		entrada = new FileInputStream("bbdd/configuracion.properties");
 		// cargamos el archivo de propiedades
 		propiedades.load(entrada);
 		// obtenemos las propiedades y las imprimimos

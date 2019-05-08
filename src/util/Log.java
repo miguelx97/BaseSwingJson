@@ -1,8 +1,5 @@
 package util;
 
-//import java.io.BufferedWriter;
-//import java.io.FileWriter;
-//import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -23,16 +20,6 @@ public class Log {
 		String fechaFormato = new SimpleDateFormat("yyyy/mm/dd hh:mm:ss").format(fecha);
 		String imprimir =fechaFormato + "   [" + clase + "] " + mensaje;
 		System.out.println(imprimir);
-//		BufferedWriter writer;
-//		try {
-//			writer = new BufferedWriter(new FileWriter("c:/logs.txt"));
-//			writer.write(imprimir);
-//			writer.close();
-//		
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
 	    
 	}
 	
