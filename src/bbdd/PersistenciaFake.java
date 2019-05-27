@@ -16,7 +16,7 @@ public class PersistenciaFake implements IPersistencia{
 		return 1;
 	}
 	
-	public ArrayList<EjObjeto> obtenerLista() {
+	public ArrayList<EjObjeto> obtenerLista(String filtro) {
 		return bbdd;
 	}
 	

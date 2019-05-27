@@ -16,6 +16,9 @@ import javax.swing.table.DefaultTableModel;
 import controlador.Controlador;
 import modelo.EjObjeto;
 import numerales.Medidas;
+import javax.swing.JTextField;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class PanelShow extends JPanel {
 
@@ -27,6 +30,8 @@ public class PanelShow extends JPanel {
 	private DefaultTableModel model;
 	private JButton btnModificar;
 	private JButton btnEliminar;
+	private JTextField txtFiltro;
+	private JButton btnFiltrar;
 	
 	public JButton getBtnModificar() {
 		return btnModificar;
@@ -34,6 +39,14 @@ public class PanelShow extends JPanel {
 
 	public JButton getBtnEliminar() {
 		return btnEliminar;
+	}
+
+	public JButton getBtnFiltrar() {
+		return btnFiltrar;
+	}
+
+	public String getTxtFiltro() {
+		return txtFiltro.getText();
 	}
 
 	public PanelShow() {
@@ -51,12 +64,28 @@ public class PanelShow extends JPanel {
 		add(lblTitulo);
 		
 		btnModificar = new JButton("Modificar");
-		btnModificar.setBounds(26, 316, 89, 23);
+		btnModificar.setBounds(359, 316, 89, 23);
 		add(btnModificar);
 		
 		btnEliminar = new JButton("Eliminar");
-		btnEliminar.setBounds(436, 316, 89, 23);
+		btnEliminar.setBounds(483, 316, 89, 23);
 		add(btnEliminar);
+		
+		btnFiltrar = new JButton("Filtrar");
+		btnFiltrar.setBounds(165, 316, 72, 23);
+		add(btnFiltrar);
+		
+		txtFiltro = new JTextField();
+		txtFiltro.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				btnFiltrar.doClick();
+			}
+		});
+		
+		txtFiltro.setBounds(22, 317, 116, 20);
+		add(txtFiltro);
+		txtFiltro.setColumns(10);
 		
 	}
 	
@@ -113,7 +142,8 @@ public class PanelShow extends JPanel {
 	
 	public void setControlador(Controlador c) {
 		btnModificar.addActionListener(c);
-		btnEliminar.addActionListener(c);		
+		btnEliminar.addActionListener(c);	
+		btnFiltrar.addActionListener(c);	
 	}
 	
 	public EjObjeto getDatoDeTabla () {
@@ -140,5 +170,4 @@ public class PanelShow extends JPanel {
 			model.removeRow(row);
 			}
 	}
-
 }

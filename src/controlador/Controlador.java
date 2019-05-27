@@ -56,7 +56,7 @@ public class Controlador implements ActionListener {
 				panelForm.tipoPanel(PanelForm.INSERTAR);
 			} else if (((JMenuItem) opcion).equals(vistaPrincipal.getMntmShow())) {
 				log.print("getMntmShow");
-				ArrayList<EjObjeto> lista = persistencia.obtenerLista();
+				ArrayList<EjObjeto> lista = persistencia.obtenerLista("");
 				panelShow.rellenarTabla(lista);
 				vistaPrincipal.definirPanel(panelShow);	
 			}
@@ -68,6 +68,11 @@ public class Controlador implements ActionListener {
 				irModificar();
 			} else if (((JButton) opcion).equals(panelShow.getBtnEliminar())) {		//Eliminar
 				eliminar(persistencia);								
+			} else if (((JButton) opcion).equals(panelShow.getBtnFiltrar())) {		//Filtrar
+				String filtro = panelShow.getTxtFiltro();
+				ArrayList<EjObjeto> lista = persistencia.obtenerLista(filtro);
+				log.print("Filtrando por: " + filtro);
+				panelShow.rellenarTabla(lista);							
 			}
 		}
 
@@ -97,7 +102,7 @@ public class Controlador implements ActionListener {
 					res = persistencia.modificar(ejObjeto);
 					
 					if (res == 1) {
-						panelShow.rellenarTabla(persistencia.obtenerLista());
+						panelShow.rellenarTabla(persistencia.obtenerLista(""));
 						vistaPrincipal.setMensaje(VistaPrincipal.INFO, "Objeto modificado");
 						vistaPrincipal.definirPanel(panelShow);	
 					}	

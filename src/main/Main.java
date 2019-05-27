@@ -37,7 +37,7 @@ public class Main {
 				vistaPrincipal.hacerVisible();
 				
 				//mostrar PanelShow
-				panelShow.rellenarTabla(new Persistencia().obtenerLista());
+				panelShow.rellenarTabla(new Persistencia().obtenerLista(""));
 				vistaPrincipal.definirPanel(panelShow);	
 			}
 		});

@@ -7,23 +7,27 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import com.google.gson.Gson;
+
 import modelo.EjObjeto;
 import util.Log;
 
 public class Persistencia implements IPersistencia{
 	Log log = new Log(this.getClass().getSimpleName());
+	Gson gson = new Gson();
+	String data="";
 	public int guardar(EjObjeto ejObjeto) {
+		data=gson.toJson(ejObjeto);
+		log.print("guardar: " + data);
 		int r = 0;
-			
 		try{
 			Conexion conexion = new Conexion();
 			Connection con = conexion.getConnection();
-			String query =	"INSERT INTO ej_tabla (ej_int, ej_string) " +
-									"VALUES (?, ?)";
+			String query =	"INSERT INTO ej_tabla (data) " +
+									"VALUES (?)";
 
 			PreparedStatement pstmt = con.prepareStatement(query);
-			pstmt.setInt(1, ejObjeto.getEjInt());
-			pstmt.setString(2, ejObjeto.getEjString());
+			pstmt.setString(1, data);
 			
 			r = pstmt.executeUpdate();
 			
@@ -39,28 +43,29 @@ public class Persistencia implements IPersistencia{
 	}
 	
 	
-	public ArrayList<EjObjeto> obtenerLista() {
+	public ArrayList<EjObjeto> obtenerLista(String filtro) {
 		ArrayList<EjObjeto> listaEjObjetos = new ArrayList<EjObjeto>();
 		
 			try{
 			Conexion conexion = new Conexion();
 			Connection con = conexion.getConnection();
-			String query = "SELECT id, ej_int,  ej_string FROM ej_tabla";
+			String query = "SELECT id, data FROM ej_tabla "
+					+ " where data LIKE '%" + filtro + "%'";
 
 			
 			Statement pstmt = con.createStatement();
 			ResultSet rset = pstmt.executeQuery(query);
 			
-			EjObjeto contact = null;
+			EjObjeto ejObjeto = null;
 			
 			while (rset.next()) {
 				int id = rset.getInt("id");
-				int ejInt = rset.getInt("ej_int");
-				String ejString = rset.getString("ej_string");
+				data = rset.getString("data");
 				
-				contact = new EjObjeto(id, ejInt, ejString);
+				ejObjeto = gson.fromJson(data, EjObjeto.class);
+				ejObjeto.setId(id);
 				
-				listaEjObjetos.add(contact);
+				listaEjObjetos.add(ejObjeto);
 			}
 			
 			rset.close();
@@ -101,18 +106,18 @@ public class Persistencia implements IPersistencia{
 	
 	public int modificar(EjObjeto ejObjeto) {
 		int r = 0;
-			
+		data=gson.toJson(ejObjeto);
+		log.print("modificar: " + data);
 		try{
 			Conexion conexion = new Conexion();
 			Connection con = conexion.getConnection();
 			String query =	" UPDATE ej_tabla " +
-							" SET  ej_int = ?,  ej_string = ?" +
+							" SET  data = ?" +
 							" WHERE id = ?";
 
 			PreparedStatement pstmt = con.prepareStatement(query);
-			pstmt.setInt(1, ejObjeto.getEjInt());
-			pstmt.setString(2, ejObjeto.getEjString());
-			pstmt.setInt(3, ejObjeto.getId());
+			pstmt.setString(1, data);
+			pstmt.setInt(2, ejObjeto.getId());
 			
 			r = pstmt.executeUpdate();
 			
@@ -130,12 +135,3 @@ public class Persistencia implements IPersistencia{
 	
 }
 
-/*
-CREATE TABLE CONTACTOS
-(
-   ID_CONTACTO   NUMBER (4) PRIMARY KEY,
-   NOMBRE        VARCHAR2 (20),
-   NUMERO        VARCHAR2 (20) NOT NULL,
-   DESTACADO     VARCHAR2 (2)
-)
-*/
